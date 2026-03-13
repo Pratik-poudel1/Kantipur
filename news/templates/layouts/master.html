@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kantipur</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="scroll-hide-container">
+        <div class="top-bar">
+            <div class="container">
+                <div class="date-time">
+                    <span><i class="fas fa-calendar-alt me-2"></i><span id="live-date"></span></span>
+                    <span><i class="fas fa-clock me-2"></i><span id="live-time"></span> NPT</span>
+                </div>
+
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/kantipurdaily/" target="_blank"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/kantipurdaily" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/kantipur_daily/" target="_blank"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@KantipurTVHD" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.linkedin.com/company/kantipur-media-group" target="_blank">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <header class="header-main">
+            <br>
+            <div class="container">
+                <div class="d-flex align-items-center" style="gap: 10px;">
+                    <form action="{% url 'search' %}" method="get" class="d-flex">
+                        <input type="text" name="query" class="form-control me-2" placeholder="Search news..." required
+                            style="width: 800px;">
+                        <button type="submit" class="btn"
+                            style="background-color: #e74c3c; color: white; border: none;">
+                            <i class="fas fa-search"></i>
+                        </button>
+
+                    </form>
+                    {% if user.is_authenticated %}
+                    <h4 class="header-username">Welcome, {{ user.username }} !</h4>
+                    <div style='text-align: right;'>
+                        <a class="link-active" href="{% url 'logout' %}">
+                            <i class="fas fa-sign-out-alt me-1"></i>Logout
+                        </a>
+                    </div>
+                    {% else %}
+                    <div style='text-align: right;'>
+                        <a class="link-active" href="{% url 'login' %}"><i class="fas fa-sign-in-alt me-1"></i>Login</a>
+                        <a class="link-active" href="{% url 'register' %}"><i
+                                class="fas fa-user-plus me-1"></i>Register</a>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="logo-section">
+                    <div class="logo">Kantipur</div>
+                    <div class="logo-subtitle">Nepal's Leading News Portal</div>
+                </div>
+            </div>
+
+
+        </header>
+        <div class="breaking-news">
+            <div class="container d-flex align-items-center">
+                <div class="breaking-label">Breaking News:</div>
+                <div class="breaking-content">
+                    <div class="marquee">
+                        {% for item in breaking_news %}
+                        <span class="breaking-item">
+                            {% if item.image %}
+                            <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                            {% endif %}
+                            {{ item.title }}
+                        </span>
+                        <span>&nbsp;•&nbsp;</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark nav-main sticky-top">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'index' %}"><i class="fas fa-home me-1"></i>
+                            Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'national' %}"><i class="fas fa-newspaper me-1"></i>
+                            National</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'international' %}"><i class="fas fa-globe-asia me-1"></i>
+                            International</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'business' %}"><i class="fas fa-chart-line me-1"></i>
+                            Business</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'sports' %}"><i class="fas fa-volleyball-ball me-1"></i>
+                            Sports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'entertainment' %}"><i class="fas fa-film me-1"></i>
+                            Entertainment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'technology' %}"><i class="fas fa-laptop-medical me-1"></i>
+                            Technology</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'health' %}"><i class="fas fa-heartbeat me-1"></i>
+                            Health</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'education' %}">
+                            <i class="fas fa-graduation-cap me-1"></i> Education
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'travels' %}">
+                            <i class="fas fa-plane me-1"></i> Travel
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'music' %}">
+                            <i class="fas fa-music me-1"></i> Music
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br><br><br>
+    <div class="container">
+        <div class="row g-4"> <!-- Added g-4 for consistent gap between cards -->
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h3 class="footer-title">About Kantipur</h3>
+                    <div class="footer-about">
+                        <p>Kantipur is Nepal's leading digital news platform, providing comprehensive coverage of
+                            national and international news, politics, business, sports, entertainment, and more.</p>
+                        <p>With a legacy of journalistic excellence since 1993, we bring credible and timely news to
+                            millions of readers worldwide.</p>
+                    </div>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/kantipurdaily/" target="_blank"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/kantipurdaily" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/kantipur_daily/" target="_blank"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/@KantipurTVHD" target="_blank"><i
+                                class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <div class="footer-links">
+                        <a href="{% url 'index' %}">Home</a>
+                        <a href="{% url 'national' %}">National News</a>
+                        <a href="{% url 'international' %}">International News</a>
+                        <a href="{% url 'business' %}">Business</a>
+                        <a href="{% url 'sports' %}">Sports</a>
+                        <a href="{% url 'entertainment' %}">Entertainment</a>
+                        <a href="{% url 'technology' %}">Technology</a>
+                        <a href="{% url 'health' %}">Health</a>
+                        <a href="{% url 'education' %}">Education</a>
+                        <a href="{% url 'music' %}">Music</a>
+                        <a href="{% url 'travels' %}">Travels</a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Kantipur Media Group, Kamaladi, Kathmandu</p>
+                        <p><i class="fas fa-phone me-2"></i> +977-1-4229567, 4229587</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@kantipur.com.np</p>
+                        <p><i class="fas fa-globe me-2"></i> www.kantipur.com.np</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2025 Kantipur Media Group. All Rights Reserved. | Designed with <i
+                        class="fas fa-heart text-danger"></i> in Nepal</p>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let lastScrollTop = 0;
+        const scrollHideContainer = document.querySelector('.scroll-hide-container');
+        const scrollThreshold = 100;
+
+        window.addEventListener('scroll', function () {
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (currentScroll > lastScrollTop && currentScroll > scrollThreshold) {
+                // Scroll down
+                scrollHideContainer.classList.add('hidden');
+            } else {
+                // Scroll up
+                scrollHideContainer.classList.remove('hidden');
+            }
+
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+        });
+    </script>
+    <script>
+        function updateDateTime() {
+            // Nepal Time offset: UTC+5:45
+            // Create a Date object in UTC and then add the offset
+            const now = new Date();
+
+            // Calculate Nepal time in milliseconds
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const nepalOffset = 5 * 60 + 45; // minutes
+            const nepalTime = new Date(utc + (nepalOffset * 60000));
+
+            // Format date: Month Day, Year (e.g., August 8, 2025)
+            const optionsDate = { year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = nepalTime.toLocaleDateString('en-US', optionsDate);
+
+            // Format time: hh:mm:ss AM/PM
+            const optionsTime = { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
+            const formattedTime = nepalTime.toLocaleTimeString('en-US', optionsTime);
+
+            // Update the spans
+            document.getElementById('live-date').textContent = formattedDate;
+            document.getElementById('live-time').textContent = formattedTime;
+        }
+
+        // Update immediately and then every second
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    </script>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+
+</html>

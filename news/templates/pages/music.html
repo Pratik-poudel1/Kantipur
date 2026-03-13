@@ -1,0 +1,24 @@
+{% extends "layouts/master.html" %}
+
+{% block content %}
+    <h2 class="mb-4">Music</h2>
+    <div class="row">
+        {% for item in news %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top" height="200" alt="{{ item.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.title }}</h5>
+                    <p class="card-text">{{ item.description |truncatewords:20 }}</p>
+                    <a href="{% url 'news_detail' item.slug %}" class="btn btn-primary">Read more</a>
+                    <p class="text-muted mt-3 mb-0" style="font-size: 0.85rem;font-weight: bold;">
+                        🗓️ Created at: {{ item.created_at|date:"F d, Y" }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

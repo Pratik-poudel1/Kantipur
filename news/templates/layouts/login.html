@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Kantipur</title>
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <style>
+        /* ==== Background with moving overlay ==== */
+        .auth-container {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: url("https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?q=80&w=1974") center/cover no-repeat;
+            overflow: hidden;
+        }
+
+        .auth-container::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 1;
+        }
+
+        .auth-container::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(270deg, rgba(13, 110, 253, 0.15), rgba(255, 255, 255, 0.05));
+            animation: moveGradient 8s infinite linear;
+            z-index: 1;
+        }
+
+        @keyframes moveGradient {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ==== Glass Card ==== */
+        .auth-card {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==== Header ==== */
+        .auth-header {
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .auth-logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #0d6efd, #1e90ff);
+
+            /* Standard property for background clip */
+            background-clip: text;
+
+            /* WebKit-specific prefix */
+            -webkit-background-clip: text;
+
+            /* Make the text transparent so background shows through */
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .auth-title {
+            color: white;
+            font-weight: 600;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* ==== Form ==== */
+        .auth-body {
+            padding: 30px;
+        }
+
+        .form-floating label {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+            color: white;
+        }
+
+        .form-text {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ==== Button with Glow Effect ==== */
+        .btn-primary {
+            background: linear-gradient(45deg, #0d6efd, #1e90ff);
+            border: none;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            transform: skewX(-20deg);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::after {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(13, 110, 253, 0.6);
+        }
+
+        /* ==== Links ==== */
+        .text-link {
+            color: #0d6efd;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .text-link:hover {
+            color: #1e90ff;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Header -->
+            <div class="auth-header">
+                <div class="auth-logo">Kantipur</div>
+                <h3 class="auth-title">Login to Your Account</h3>
+            </div>
+
+            <!-- Body -->
+            <div class="auth-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                        {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Username -->
+                    <div class="form-floating mb-4">
+                        <input type="text" name="username" class="form-control" id="id_username" placeholder="Username"
+                            required>
+                        <label for="id_username"><i class="fas fa-user me-2"></i>Username</label>
+                        <div class="form-text"><i class="fas fa-id-badge me-1"></i>Your unique username</div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-floating mb-4">
+                        <input type="password" name="password" class="form-control" id="id_password"
+                            placeholder="Password" required>
+                        <label for="id_password"><i class="fas fa-lock me-2"></i>Password</label>
+                        <div class="form-text"><i class="fas fa-shield-alt me-1"></i>Must be at least 8 characters</div>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="d-grid mb-3">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-sign-in-alt me-2"></i> Login
+                        </button>
+                    </div>
+
+                    <!-- Links -->
+                    <div class="text-center mt-4">
+                        <p class="mb-2 text-white">Don't have an account?
+                            <a href="{% url 'register' %}" class="text-link">Register here</a>
+                        </p>
+                        <p>
+                            <a href="{% url 'password_reset' %}" class="text-link">
+                                <i class="fas fa-key me-1"></i> Forgot password?
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
