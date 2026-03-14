@@ -120,7 +120,57 @@ body {
     font-weight: bold;
     background-color: var(--primary);
     border-radius: 6px;
-    padding: 10px 16px;
+    padding: 8px 14px;
+    white-space: nowrap;
+    text-decoration: none;
+    display: inline-block;
+}
+.link-active:hover {
+    background-color: var(--primary-dark);
+    color: white;
+}
+
+/* Header Search + Auth Row */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.header-search-form {
+    display: flex;
+    align-items: center;
+    flex: 1 1 200px;
+    min-width: 0;
+}
+.header-search-form .form-control {
+    flex: 1;
+    min-width: 0;
+}
+.btn-search {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.btn-search:hover {
+    background-color: var(--primary-dark);
+    color: white;
+}
+.header-auth {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+.header-username {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--dark);
+    white-space: nowrap;
 }
 
 /* ========== Breaking News ========== */
@@ -297,6 +347,18 @@ body {
     .top-bar .container { flex-direction: column; gap: 10px; }
     .card { max-width: 90%; min-height: 380px; }
     .card-img-top { height: 180px; }
+    .header-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    .header-search-form {
+        width: 100%;
+    }
+    .header-auth {
+        justify-content: flex-end;
+        width: 100%;
+    }
 }
 @media (max-width: 576px) {
     .nav-main .nav-link { padding: 10px 15px !important; font-size: 0.85rem; }
@@ -304,4 +366,6 @@ body {
     .logo-subtitle { font-size: 0.9rem; }
     .card-title { font-size: 1rem; }
     .card-text { font-size: 0.85rem; }
+    .link-active { padding: 6px 10px; font-size: 0.85rem; }
+    .header-username { font-size: 0.85rem; }
 }

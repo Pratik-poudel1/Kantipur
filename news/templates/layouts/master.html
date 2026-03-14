@@ -41,30 +41,24 @@
         <header class="header-main">
             <br>
             <div class="container">
-                <div class="d-flex align-items-center" style="gap: 10px;">
-                    <form action="{% url 'search' %}" method="get" class="d-flex">
-                        <input type="text" name="query" class="form-control me-2" placeholder="Search news..." required
-                            style="width: 800px;">
-                        <button type="submit" class="btn"
-                            style="background-color: #e74c3c; color: white; border: none;">
+                <div class="header-actions">
+                    <form action="{% url 'search' %}" method="get" class="header-search-form">
+                        <input type="text" name="query" class="form-control me-2" placeholder="Search news..." required>
+                        <button type="submit" class="btn btn-search">
                             <i class="fas fa-search"></i>
                         </button>
-
                     </form>
+                    <div class="header-auth">
                     {% if user.is_authenticated %}
-                    <h4 class="header-username">Welcome, {{ user.username }} !</h4>
-                    <div style='text-align: right;'>
+                        <span class="header-username">Welcome, {{ user.username }}!</span>
                         <a class="link-active" href="{% url 'logout' %}">
                             <i class="fas fa-sign-out-alt me-1"></i>Logout
                         </a>
-                    </div>
                     {% else %}
-                    <div style='text-align: right;'>
                         <a class="link-active" href="{% url 'login' %}"><i class="fas fa-sign-in-alt me-1"></i>Login</a>
-                        <a class="link-active" href="{% url 'register' %}"><i
-                                class="fas fa-user-plus me-1"></i>Register</a>
-                    </div>
+                        <a class="link-active" href="{% url 'register' %}"><i class="fas fa-user-plus me-1"></i>Register</a>
                     {% endif %}
+                    </div>
                 </div>
                 <div class="logo-section">
                     <div class="logo">Kantipur</div>
