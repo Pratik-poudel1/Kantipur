@@ -34,6 +34,23 @@
   }
 },
 {
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$7R1c9zcqJdlRnzMtoOAoAP$LM0yxfy8nJVrhHY53N4tvN1Us9DrRt0u4yDG+6CKsww=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "Pratik",
+    "first_name": "",
+    "last_name": "",
+    "email": "pratikpoudel676@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-03-14T06:49:18.307Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
   "model": "sessions.session",
   "pk": "1iiconib53p0y5jm1jaglxn96xz72mzy",
   "fields": {
